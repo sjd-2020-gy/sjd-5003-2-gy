@@ -30,7 +30,7 @@ Input:
       if not supplied.
 
     - Terrain raster file - URL suppied as a argument
-        
+            
 Output:
     - Figure (with sub plots - 2 x 2)
         - Elevation map (1)
@@ -200,7 +200,7 @@ if args.display_params == 'Y':
 terrain = surface.SurfaceRaster(args.file_name)
 terrain.read_raster()
 terrain.close_raster()
-
+    
 
 #----------------------------------------------------------
 # Start preparing for the creation of the Neighbourhood 

@@ -68,7 +68,7 @@ class SurfaceRaster():
         self.yllcorner = 0
         self.yllcenter = 0
         self.cellsize = 0
-        self.nodata_value = 0
+        self.nodata_value = -9999
 
         # Raster cell data variables
         self.cells = []

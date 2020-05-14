@@ -4,24 +4,22 @@ Submission of Python Code, test documentation and test output files for Assignme
 
 ### To the Max!(...imum Gradient...)
 
-This application has been developed using Python 3.7.  The key functionality operatives are:
-* Reads a raster dataset containing rows and columns of surface elevation data values.
-	Note: The app is able to accept both georeferenced and non-georeferenced formatted datasets.
-* Performs basic data validation on the input dataset.
-	Note: if the input dataset fails validation (corruption), no output will be generated.
+This application has been developed using Python 3.7.  The key functional components are:
+* Reads a raster dataset containing rows and columns of surface elevation data values.  The app is able to accept both georeferenced and non-georeferenced formatted datasets.
+* Performs basic data validation on the input dataset.  No output will be generated if the input dataset fails validation (corruption).
 * Calculates slope values (degrees and percentages) for each surface data cell.
 * Calculates aspect values for each surface data cell.
-* Generates and displays a figure containing the following combinations:
-	* (2 maps) DEM map, slope map in degrees (default combination);
-	* (2 maps) DEM map, slope map using percentages;
-	* (3 maps) DEM map, slope map in degrees, slope map using percentages;
-	* (3 maps) DEM map, slope map in degrees, aspect map;
-	* (3 maps) DEM map, slope map using percentages, aspect map;
-	* (4 maps) DEM map, slope map in degrees, slope map using percentages, aspect map.
+* Generates and displays a figure containing the following combinations of maps:
+	- (2 maps) DEM map, slope map in degrees (default combination);
+	- (2 maps) DEM map, slope map using percentages;
+	- (3 maps) DEM map, slope map in degrees, slope map using percentages;
+	- (3 maps) DEM map, slope map in degrees, aspect map;
+	- (3 maps) DEM map, slope map using percentages, aspect map;
+	- (4 maps) DEM map, slope map in degrees, slope map using percentages, aspect map.
 * Generates and outputs text files containing rows and columns of:
-	* Slope data in degrees (Default);
-	* Slope data using percentage;
-	* Aspect data.
+	- Slope data in degrees (Default);
+	- Slope data using percentages;
+	- Aspect data.
 
 
 ---
@@ -34,11 +32,11 @@ This application has been developed using Python 3.7.  The key functionality ope
 * neighbourhood.py
   
 ##### Test Documents
-* Test Cases.docx  
+* Test Cases.pdf  
 
 ##### Input Files Used 
 * snow.slope (standard file supplied by University of Leeds)  
-* nn22.asc (geo-referenced ascii file extracted from Digimap, provide to proove versatility)
+* nn22.asc (geo-referenced ascii file extracted from Digimap, provided to proove versatility)
 
 ##### Output Files Created (Input: snow.slope)
 * slope_map_deg_1.txt  (slope map in degrees)  
@@ -76,15 +74,15 @@ with any or all of the following optional arguments:
 | --- | --- |  
 | ***&#x2010;&#x2010;filename url*** | where url = path and file name of selected input dataset |  
 | ***&#x2010;&#x2010;resolution n*** | where n = resolution / cellsize of tthe surface input dataset (numeric) |  
-| ***&#x2010;&#x2010;fillsinks  x*** | where x = Fill data cells when no downhill slope leading from it (Y/N*) |  
-| ***&#x2010;&#x2010;slopemap x*** | where x = Slope map selection (as a ***P***ercentage, in ***d***egrees or ***b***oth) |  
-| ***&#x2010;&#x2010;aspectmap x*** | where x = Aspect map required (Y/N*) |  
+| ***&#x2010;&#x2010;fillsinks  x*** | where x = Fill data cells when no downhill slope leading from it (**Y**es / **N**o*) |  
+| ***&#x2010;&#x2010;slopemap x*** | where x = Slope map selection (as a **P**ercentage, in **D**egrees or **B**oth) |  
+| ***&#x2010;&#x2010;aspectmap x*** | where x = Aspect map required (**Y**es / **N**o*) |  
 | ***&#x2010;&#x2010;xref n*** | where n = Lower left corner Cartesian map reference - x axis (numeric) |  
 | ***&#x2010;&#x2010;yref n*** | where n = Lower left corner Cartesian map reference - y axis (numeric) |  
-| ***&#x2010;&#x2010;hemisphere n*** | where n = Hemisphere of x,y Cartesian map reference (***N***orthern, ***S***outhern) | 
-| ***&#x2010;&#x2010;dispparams x*** | where x = Display Parameter Data (Y/N*) |  
+| ***&#x2010;&#x2010;hemisphere x*** | where x = Hemisphere of x,y Cartesian map reference (**N**orthern, **S**outhern) | 
+| ***&#x2010;&#x2010;dispparams x*** | where x = Display Parameter Data (**Y**es / **N**o*) |  
 
-*Any other value will be treat as if a N
+*Any other value will be treat as if a **N**o
 
 
 ---
