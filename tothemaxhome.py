@@ -8,7 +8,23 @@ Contains:
 - Classes: FrontEnd
 - Methods: browse, run, clear, helper, about, finish, sel_perc, sel_deg,  
            sel_perc_and_deg, sel_northern, sel_southern and unchecked
+
+Inputs:
+- URL of input dataset
+- Resolution / Cell size of the surface input dataset
+- Fill data cells when no downhill slope leading from them
+- Slope map selection - as a percentage, in degrees or both
+- Aspect map required indicator
+- Lower left corner Cartesian map reference (x axis)
+- Lower left corner Cartesian map reference (y axis)
+- Hemisphere of x,y Cartesian map reference
+- Display Parameter Data
+
+Outputs:
+- Data string parsed to tothemaxmain.py containing any entered input arguments
+- Run information and data validation exceptions returned from tothemaxmain.py
 '''
+
 import tkinter as tk
 from tkinter import filedialog
 import subprocess
@@ -24,7 +40,7 @@ class FrontEnd():
         - File name 
             (URL returned from browse button activation)
 
-    Data entry fields:
+    Input Data entry fields:
         - Resolution / Cell size
             (Optional, integer, > 0, auto poputlated from raster ascii file)
         - Lower left corner Cartesian map reference (x axis)
@@ -32,7 +48,7 @@ class FrontEnd():
         - Lower left corner Cartesian map reference (y axis)
             (Optional, integer, auto populated from raster ascii file)
 
-    Check Buttons
+    Input Check Buttons
         - Fill sinks cells when no downhill slope
             (optional, translated to single byte text, default=off)
         - Create aspect map
@@ -40,13 +56,13 @@ class FrontEnd():
         - Display Parameter Data
             (optional, translated to single byte text, default=off)
 
-    Radio Buttons
+    Input Radio Buttons
         - Create slope map - as a percentage, in degrees or both
             (translated to single byte text, default=D)
         - Specify hemisphere of lower left corner Cartesian map reference
             (translated to single byte text, default=N)
         
-    Buttons:
+    User Buttons:
         - Run 
             (Transfers control to tothemaxmain.py with data entry fiels as
              arguments, if entered or selected)
@@ -55,7 +71,7 @@ class FrontEnd():
         - Exit
             (Terminate application)
             
-    Display field
+    Output Display field
         - Run information
             (Displays any information (help, validation errosr etc) returned
              from modelmain.py or the command prompt)
@@ -88,6 +104,13 @@ class FrontEnd():
         #-------------------------------------------------
         # Create GUI page
         #-------------------------------------------------
+        self.ABOUT = 'To the Max v1.0' \
+                     + '\n\nAuthor: 201388212' \
+                     + '\n\nCourse: MSc - Geographical Information Science' \
+                     + '\n\nUnit: GEOG5003M' \
+                     + '\n\nAssignment: 2' \
+                     + '\n\nDate: 14 May 2020'
+                     
         self.home = home
         
         # Fields for Radio and Check buttons
@@ -310,7 +333,22 @@ class FrontEnd():
 
 
     def browse(self, event=None):
-
+        '''
+        Searches and selects input dataset.
+    
+        Validates selected input dataset.
+        
+        Triggered by:
+            - Browse button.
+            
+        Inputs:
+            - None.
+            
+        Returns:
+            - URL of selected dataset to be used as input for the remainder 
+              of the run.
+            - Data validation errors (if any) of selected input dataset.
+        '''
         self.file_name = filedialog.askopenfilename(
                                 initialdir='/', title='Select A File', 
                                 filetype=(('ascii files','*.asc'),
@@ -353,9 +391,20 @@ class FrontEnd():
         Display any returned information, errors, help etc.
         
         Note 1: Only parameters that have been entered via the GUI front-end 
-        will be passed as arguments to modelhome.py.  
+        will be passed as arguments to tothemaxhome.py.  
         
-        Note 2: Radio and Check button will always have a value.
+        Note 2: Radio and Check buttons will always have a value.
+        
+        Triggered by:
+            - Run button.
+            - Menu bar File > Run option.
+            
+        Inputs:
+            - GUI input data.
+            
+        Returns:
+            - Data validation errors received back from tothemaxmain.py.
+            - Run information summary if requested by the user.
         '''
         call_string = ''.join(
             ['python tothemaxmain.py',
@@ -386,6 +435,16 @@ class FrontEnd():
     def clear(self, event=None):
         '''
         Set / Reset input fields to their initial values.
+
+        Triggered by:
+            - Reset button.
+            - Menu bar File > Reset.
+            
+        Inputs:
+            - None.
+            
+        Returns:
+            - GUI input fields reset.
         '''
         self.b1.focus_set()
         self.l11.configure(text='')
@@ -408,7 +467,14 @@ class FrontEnd():
         '''
         Get the main To the Max help information.
         
-        Display information in a popup window.
+        Triggered by:
+            - Menu bar Help > Inputs option.
+            
+        Inputs:
+            - None.
+            
+        Returns:
+            - Help information received back from tothemaxmain.py.
         '''
         help_return = subprocess.getoutput('python tothemaxmain.py -h') 
         
@@ -426,20 +492,22 @@ class FrontEnd():
     def about(self):
         '''
         Display general information about the Agents model in a popup window.
+
+        Triggered by:
+            - Menu bar Help > About option.
+            
+        Inputs:
+            - None.
+            
+        Returns:
+            - General information about the application.
         '''
-        about_return = 'To the Max v1.0' \
-                       + '\n\nAuthor: 201388212' \
-                       + '\n\nCourse: MSc - Geographical Information Science' \
-                       + '\n\nUnit: GEOG5003M' \
-                       + '\n\nAssignment: 2' \
-                       + '\n\nDate: 8 May 2020'
-        
         about_info = tk.Tk()
         about_info.geometry('600x450')
         about_info.wm_title('About - To The Max - Student 201388212')
         about_text = tk.Text(about_info)
         about_text.pack()
-        about_text.insert(tk.END, about_return)
+        about_text.insert(tk.END, self.ABOUT)
         
         b2 = tk.Button(about_info, text='OK', command=about_info.destroy)
         b2.pack()
@@ -447,7 +515,7 @@ class FrontEnd():
     
     def finish(self, event=None):
         '''
-        Exit the program.
+        Exits the program.
         '''
         exit()
         

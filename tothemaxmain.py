@@ -2,25 +2,30 @@
 To the Max main processing
 Can start from this module or initiated from tothemaxhome.py
 
+Purpose:
+    - Calculates slope and aspect values from input dataset data
+    - Generates maps (up to 4) using Matplotlib 
+    - Creates .txt output files (3) 
+
 Filename: 
     - tothemaxmain.py 
 
-Called by:
+Triggered by:
     - tothemaxhome.py (GUI front-end)
     - Command line
     - Developement IDE
 
 Input:   
     - 9 optional arguments - able to be passed in in any order:
-        - filename - URL of input raster dataset
-        - resolution - Cell size
-        - fillsinks - Try filling cells when no downhill slope
-        - slopemap - Create slope map - as a percentage, in degrees or both
-        - aspectmap - Create aspect map
-        - xref - Lower left corner Cartesian map reference (x axis)
-        - yref - Lower left corner Cartesian map reference (y axis)
-        - hemisphere - Hemisphere of lower left corner Cartesian map reference
-        - dispparams - Display Parameter Data
+        - --filename <URL of input dataset>
+        - --resolution <Resolution / Cell size of the surface input dataset>
+        - --fillsinks <Fill data cells when no downhill slope>
+        - --slopemap <Slope map selection: as a percentage, in degrees or both>
+        - --aspectmap <Aspect map required indicator>
+        - --xref <Lower left corner Cartesian map reference (x axis)>
+        - --yref <Lower left corner Cartesian map reference (y axis)>
+        - --hemisphere <Hemisphere of x,y Cartesian map reference>
+        - --dispparams <Display parameter data>
       Note: All arguments but filename have a default value hard coded
       if not supplied.
 
@@ -32,10 +37,11 @@ Output:
         - Gradient map (1 or 2)
         - Aspect map (0 or 1)
     - Files
-        - snow_slope_map_perc.txt - Slope map data as a percentage
-        - snow_slope_map_deg.txt  - Slope map data in degrees
-        - snow_aspect_map.txt     - Aspect map data
+        - slope_map_perc.txt - Slope map data as a percentage
+        - slope_map_deg.txt  - Slope map data in degrees
+        - aspect_map.txt     - Aspect map data
 '''
+
 import csv
 import math
 import numpy as np
@@ -49,7 +55,14 @@ import warnings
 
 def pos_int(num_str):
     '''
-    Test for a positive integer
+    Test for a positive integer.
+
+    Input:
+        - Data string.
+        
+    Output:
+        - Integer equivalent of input string (if valid) or Nan if otherwise.
+        - indicator if returned integerr is a positive number.
     '''
     try:
         if int(num_str) < 1:
@@ -384,7 +397,7 @@ if args.aspect_map == ('Y'):
     plt.clim(0, 360)
     cbar = plt.colorbar(colormap, ticks=np.linspace(0, 360, 17)) 
     cbar.set_ticks(np.arange(0, 361, 45).tolist())
-    cbar.set_ticklabels(['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'])
+    cbar.set_ticklabels(['N', 'NW', 'W', 'SW', 'S', 'SE', 'E', 'NE', 'N'])
     cbar.set_label('Aspect')
     plt.xticks([0, x_limit], x_ext)
     plt.yticks([0, y_limit], y_ext)
@@ -426,13 +439,13 @@ plt.show()
 
 #----------------------------------------------------------
 # Output datasets
-#  - snow_slope_map_perc.txt Slope map data as a percentage
-#  - snow_slope_map_deg.txt  Slope map data in degrees
-#  - snow_aspect_map.txt     Aspect map data
+#  - slope_map_perc.txt Slope map data as a percentage
+#  - slope_map_deg.txt  Slope map data in degrees
+#  - aspect_map.txt     Aspect map data
 #----------------------------------------------------------
-f2 = open('snow_slope_map_perc.txt', 'w', newline='')
-f3 = open('snow_slope_map_deg.txt', 'w', newline='')
-f4 = open('snow_aspect_map.txt', 'w', newline='')
+f2 = open('slope_map_perc.txt', 'w', newline='')
+f3 = open('slope_map_deg.txt', 'w', newline='')
+f4 = open('aspect_map.txt', 'w', newline='')
 
 output1 = csv.writer(f2, delimiter=' ', quoting=csv.QUOTE_NONNUMERIC)
 output2 = csv.writer(f3, delimiter=' ', quoting=csv.QUOTE_NONNUMERIC)
