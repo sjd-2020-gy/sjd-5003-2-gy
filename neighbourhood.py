@@ -2,9 +2,7 @@
 Neighbourhood Data Object
 
 Purpose:
-    - Read the contents of a surface DEM
-    - Basic validation of the content
-    - Separate header data from cell data
+    - Creates a 3 x 3 cell instance from the terrain
 
 Filename: 
     - neighbourhood.py 
@@ -48,11 +46,17 @@ class Neighbourhood():
             - Slope (percentage & degrees)
             - Aspect
         
+        Triggered by:
+            - tothemaxmain.py
+            
         Input:
             - Terrain Raster data (excluding headers)
             - Terrain resolution / cell size
             - Terrain processing cell row number
             - Terrain processing cell column number
+            
+        Output:
+            - 3 x 3 cell instance from the terrain data
         '''
         #---------------------------------------------------------
         # Initialise variables.
@@ -160,7 +164,21 @@ class Neighbourhood():
         Neigbourhood, and the applicable aspect using D8 notation.
         
         Start with the East neighbour and work clockwise.
+
+        Triggered by:
+            - tothemaxmain.py
+            
+        Input:
+            - D8 dictionary
+            - Geo-referenced NoData value 
+            
+        Output:
+            - Slope calculation as a percentage
+            - Slope calculation in degrees
+            - Aspect of max. gradient (first cell if more than 1 with the same)
+            - List of D8 directions containing the same maximum slope 
         '''
+        
         #              --Straight edge--    ---------Corner edge--------
         DICT_EDGE = {0:('NE', 'E', 'SE'), 1:('NE', 'E', 'SE', 'S', 'SW'), 
                      2:('SW', 'S', 'SE'), 3:('NW', 'W', 'SW', 'S', 'SE'),
@@ -231,6 +249,18 @@ class Neighbourhood():
         '''
         Use this method to fill the processing cell when it does not have 
         any neighbours that lead downhill from it.
+        
+        Triggered by:
+            - tothemaxmain.py
+            
+        Input:
+            - D8 dictionary
+            
+        Output:
+            - Slope calculation as a percentage
+            - Slope calculation in degrees
+            - Aspect calculation
+            - D8 direction calculation 
         '''
         #---------------------------------------------------------
         # If the processing cell is not an an edge cell, modify 

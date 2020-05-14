@@ -63,7 +63,7 @@ Name: To be advised after marking
 Student Id: 201388212  
 Course: Master of Science - Geographical Information Science  
 Unit: GEOG5003M - Programming for Geographical Information Analysis (36393)  
-Published Date: 10 May 2020  
+Published Date: 14 May 2020  
 
 ---
 ##### License Details 

@@ -5,6 +5,9 @@ Purpose:
     - Read the contents of a surface DEM
     - Basic validation of the content
     - Separate header data from cell data
+    
+Developer Note:
+    - This class can be used for extracting data from any raster DEM dataset.
 
 Filename: 
     - surface.py 
@@ -39,7 +42,18 @@ class SurfaceRaster():
     def __init__(self, dataset, separator=' '):
         '''
         Opens input raster dataset.
-        Initialises instance variables.
+
+        Initialises data object instance.
+        
+        Triggered by:
+            - any python program
+            
+        Input:
+            - Dataset URL
+            - Dataset data cell seperator
+            
+        Output:
+            - Terrain surface data instance
         '''
         
         # Raster file data variables
@@ -63,13 +77,24 @@ class SurfaceRaster():
 
     def read_raster(self):
         '''
-        Use this method to input the surface raster dataset and separate 
+        Use this method to input a surface raster dataset and separate 
         header data (if exists) from cell data.
+
+        Triggered by:
+            - any python program
+            
+        Input:
+            - None
+            
+        Output:
+            - Elevation data from input dataset
+            - Validation exceptions (corruption, if any) of input dataset
         '''
         for row in self.reader: 
 
+            # Geo-referenced rows will only have two data cells
             if len(row) == 2:
-                # Header data
+                # Geo-referenced header data
                 if row[0].lower() == 'ncols':
                     self.ncols = int(row[1])
                 elif row[0].lower() == 'nrows':
@@ -124,6 +149,15 @@ class SurfaceRaster():
 
     def close_raster(self):
         '''
-        Use this method to close the input raster dataset.
+        Use this method to close an input raster dataset.
+
+        Triggered by:
+            - any python program
+            
+        Input:
+            - None
+            
+        Output:
+            - None
         '''
         self.f1.close() 
